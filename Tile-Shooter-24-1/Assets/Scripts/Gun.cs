@@ -41,7 +41,7 @@ public class Gun : MonoBehaviour
 		if(currentAmmo <= 0) return;
 		currentAmmo--;
 
-		GameObject obj = Instantiate( bulletPrefab, transform.position, transform.rotation );
+		GameObject obj = Instantiate( bulletPrefab, transform.position + transform.right, transform.rotation );
 		obj.GetComponent<Bullet>().owner = gameObject;
 
 		audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
