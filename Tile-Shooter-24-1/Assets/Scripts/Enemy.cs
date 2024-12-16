@@ -4,7 +4,7 @@ public class Enemy : MonoBehaviour
 {
     public LayerMask groundLayer;
 
-    public float wallDistance;
+    public float groundDistance;
     [SerializeField]
     float agroRange;
 
@@ -17,9 +17,6 @@ public class Enemy : MonoBehaviour
     public Transform player;
     private bool facingRight = true;
     public GameObject bulletPrefab;
-
-    public int maxAmmo = 10;
-    public int currentAmmo;
 
     public bool isAutomatic = true;
     public float fireInterval = 0.5f;
@@ -111,7 +108,7 @@ public class Enemy : MonoBehaviour
     void IdleMove()
     {
 
-        RaycastHit2D hit = Physics2D.Raycast(castPoint.position, Vector2.down, wallDistance, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(castPoint.position, Vector2.down, groundDistance, groundLayer);
 
 
         if (hit.collider == null)
@@ -136,6 +133,7 @@ public class Enemy : MonoBehaviour
     {
         GameObject obj = Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
         obj.GetComponent<Bullet>().owner = gameObject;
+        audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
         audioSource.PlayOneShot(audioSource.clip);
         Debug.Log("saudo i " + (facingRight ? "desine" : "kaire"));
     }
