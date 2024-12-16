@@ -49,21 +49,9 @@ public class Enemy : MonoBehaviour
 
     void ChasePlayer()
     {
-        if (transform.position.x < player.position.x)
-        {
 
-            rb.velocity = new Vector2(0, 0);
-            transform.localScale = new Vector2(1, 1);
-;
-        }
-        else if(transform.position.x > player.position.x)
-        {
-
-            rb.velocity = new Vector2(0, 0);
-            transform.localScale = new Vector2(1, 1);
-
-        }
-
+        rb.velocity = new Vector2(0, 0);
+        transform.localScale = new Vector2(1, 1);
 
         if (isAutomatic && CanSeePlayer(agroRange) && fireCooldown <= 0)
         {
