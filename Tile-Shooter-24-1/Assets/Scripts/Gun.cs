@@ -36,7 +36,7 @@ public class Gun : MonoBehaviour
 		fireCooldown -= Time.deltaTime;
 	}
 
-	void Shoot()
+	public void Shoot()
 	{
 		if(currentAmmo <= 0) return;
 		currentAmmo--;
