@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
     public Transform player;
     private bool facingRight = true;
     public GameObject bulletPrefab;
-    private GameObject Player;
 
     public int maxAmmo = 10;
     public int currentAmmo;
@@ -25,7 +24,6 @@ public class Enemy : MonoBehaviour
     public bool isAutomatic = true;
     public float fireInterval = 0.5f;
     public float fireCooldown;
-    public float force;
 
     public float pitchRange = 0.1f;
     AudioSource audioSource;
@@ -65,7 +63,7 @@ public class Enemy : MonoBehaviour
         {
 
             rb.velocity = new Vector2(0, 0);
-            transform.localScale = new Vector2(-1, 1);
+            transform.localScale = new Vector2(1, 1);
 
         }
 
@@ -87,7 +85,7 @@ public class Enemy : MonoBehaviour
         float direction = facingRight ? 1f : -1f;
 
 
-        Vector2 endPos = castPoint.position + new Vector3(direction * distance, 0, 0);
+        Vector2 endPos = castPoint.position + new Vector3(direction * distance, 0, 0);  
 
 
         RaycastHit2D hit = Physics2D.Linecast(castPoint.position, endPos, 1 << LayerMask.NameToLayer("Action"));
@@ -129,18 +127,16 @@ public class Enemy : MonoBehaviour
 
     void Flip()
     {
-        transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+        float rotationY = facingRight ? 0 : 180;
+        transform.rotation = Quaternion.Euler(0, rotationY, 0);
     }
 
 
     public void Shoot()
     {
-        float direction = facingRight ? 1f : -1f;
-        Vector3 spawnPosition = transform.position + new Vector3(direction * 0.5f, 1, 0); 
-        GameObject obj = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
-        Rigidbody2D bulletRb = obj.GetComponent<Rigidbody2D>();
-        bulletRb.velocity = new Vector2(direction * 5f, 0); 
-        audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
+        GameObject obj = Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
+        obj.GetComponent<Bullet>().owner = gameObject;
         audioSource.PlayOneShot(audioSource.clip);
+        Debug.Log("saudo i " + (facingRight ? "desine" : "kaire"));
     }
 }
